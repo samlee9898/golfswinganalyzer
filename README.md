@@ -3,12 +3,19 @@
 Tech Stack I'm thinking:
 
 Runtime - Bun
+
 Frontend - React
+
 UI - Tailwind, Shadcn
+
 Server - Express
+
 Database - MySQL
+
 ORM - Prisma
+
 AI - OpenCV, Pytorch
+
 Cloud - AWS? Vercel? Render?
 
 
