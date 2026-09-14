@@ -1,15 +1,20 @@
-# golfswinganalyzer
+# Swing Lab
 
-Tech Stack I'm thinking:
+Swing Lab: A golf swing analyzer app
 
-Runtime - Bun
-Frontend - React
-UI - Tailwind, Shadcn
-Server - Express
-Database - MySQL
-ORM - Prisma
-AI - OpenCV, Pytorch
-Cloud - AWS? Vercel? Render?
+## What I'm thinking
+
+Ask users whose swing they want to imitate
+
+Ask them to submit their swings
+
+Gemini (for now) compares user's with pro's and gives back feedback on how they can improve their swing
+
+### Tech Stack
+
+Frontend - React, Tailwind, Shadcn
+Backend - Bun, Express, MySQL, AWS
+Video Analysis - GeminiAPI
 
 
 To install dependencies:
