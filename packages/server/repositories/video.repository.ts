@@ -1,30 +1,42 @@
-import pool from '../config/db.js';
+import pool from '../config/MySQL.js';
 import type { VideoRow } from '../models/video.model';
 import type { ResultSetHeader } from 'mysql2';
 
 class VideoRepository {
-   async findAllVideoByUserID(user_id: number) {
+   async findAllVideosByUserIDNumber(userIDNumber: number) {
       const [rows] = await pool.query<VideoRow[]>(
          `SELECT * FROM videos WHERE user_id = ? ORDER BY created_at DESC`,
-         [user_id]
+         [userIDNumber]
       );
-      return rows[0] ?? null;
+
+      return rows;
    }
 
-   async findOneVideo(video_id: number) {
+   async findVideoByIDAndUserIDNumber(video_id: number, userIDNumber: number) {
       const [rows] = await pool.query<VideoRow[]>(
-         `SELECT * FROM videos WHERE video_id = ? ORDER BY created_at DESC`,
-         [video_id]
+         `SELECT * FROM videos WHERE video_id = ? AND user_id = ?`,
+         [video_id, userIDNumber]
       );
+
       return rows[0] ?? null;
    }
 
-   async createVideoRecord(user_id: number, s3_key: string) {
+   async createVideo(userIDNumber: number, s3_key: string) {
       const [result] = await pool.query<ResultSetHeader>(
          `INSERT INTO videos (user_id, s3_key) VALUES (?, ?)`,
-         [user_id, s3_key]
+         [userIDNumber, s3_key]
       );
+
       return result.insertId ?? null;
+   }
+
+   async deleteVideo(video_id: number, userIDNumber: number) {
+      const [result] = await pool.query<ResultSetHeader>(
+         `DELETE FROM videos WHERE video_id = ? AND user_id = ?`,
+         [video_id, userIDNumber]
+      );
+
+      return result.affectedRows > 0;
    }
 }
 

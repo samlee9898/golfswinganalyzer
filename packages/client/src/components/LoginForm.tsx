@@ -14,6 +14,7 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
+// consider using context
 type Props = {
    setIsLoggedIn: Dispatch<SetStateAction<boolean | null>>;
 };
@@ -40,7 +41,7 @@ export function LoginForm({ setIsLoggedIn }: Props) {
       }
 
       const requestBody = {
-         userID: userInputData.userID,
+         username: userInputData.username,
          userPassword: userInputData.userPassword,
       };
 
@@ -92,10 +93,10 @@ export function LoginForm({ setIsLoggedIn }: Props) {
                </DialogHeader>
                <FieldGroup className="mt-6">
                   <Field>
-                     <Label htmlFor="userID">ID</Label>
+                     <Label htmlFor="username">ID</Label>
                      <Input
-                        id="userID"
-                        name="userID"
+                        id="username"
+                        name="username"
                         type="text"
                         placeholder="Enter your ID"
                         required

@@ -1,17 +1,9 @@
-import { useState, type Dispatch, type SetStateAction } from 'react';
-import { IoGolf, IoShieldCheckmarkOutline } from 'react-icons/io5';
+import { type Dispatch, type SetStateAction } from 'react';
+import { IoShieldCheckmarkOutline } from 'react-icons/io5';
 import { LoginForm } from './LoginForm';
 import Logout from './Logout';
 
-// const test = async () => {
-//    const response = await fetch('/api/auth/logout', {
-//       method: 'POST',
-//       credentials: 'include',
-//    });
-//    const data = await response.json();
-//    console.log(data);
-// };
-
+// consider using context
 type Props = {
    isLoggedIn: boolean | null;
    setIsLoggedIn: Dispatch<SetStateAction<boolean | null>>;
@@ -25,13 +17,18 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn, onLogout }: Props) => {
             <a
                href="/"
                className="flex items-center gap-3"
-               aria-label="Swing Lab home"
+               aria-label="Swing Analyzer home"
             >
-               <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <IoGolf className="size-5" />
+               <span className="flex size-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+                  {/*<IoGolf className="size-5" /> */}
+                  <img
+                     src="/logo.svg"
+                     alt="Golf Swing Analyzer"
+                     className="w-8.5 h-8 brightness-0 invert"
+                  />
                </span>
                <span className="text-lg font-semibold tracking-tight">
-                  Swing Lab
+                  Swing Analyzer
                </span>
             </a>
 
@@ -45,7 +42,6 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn, onLogout }: Props) => {
                ) : (
                   <LoginForm setIsLoggedIn={setIsLoggedIn} />
                )}
-               {/* <button onClick={() => test()}>Test</button> */}
             </div>
          </nav>
       </header>

@@ -1,13 +1,13 @@
-import './config/env';
-
 import express from 'express';
+
+// middleware
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // routes
-import uploadRoutes from './routes/upload.route';
-import downloadRoutes from './routes/download.route';
-import authRoutes from './routes/auth.routes';
+import authRoute from './routes/auth.route';
+import videosRoute from './routes/video.route';
+import analysesRoute from './routes/analysis.route';
 
 // custom error handler middleware
 import errorHandler from './middleware/errorHandler';
@@ -24,9 +24,9 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/upload', uploadRoutes);
-app.use('/api/download', downloadRoutes);
+app.use('/api/auth', authRoute);
+app.use('/api/videos', videosRoute);
+app.use('/api/videos/:videoID/analyses', analysesRoute);
 
 app.use(errorHandler);
 

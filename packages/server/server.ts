@@ -1,8 +1,10 @@
+// This file is the entry point for the app
+
 import './config/env';
 import app from './app';
 
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.EXPRESS_SERVER_PORT ?? 3000);
 
-app.listen(PORT, () => {
+app.listen(PORT, '127.0.0.1', () => {
    console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -1,19 +1,17 @@
-# Swing Lab
+# Swing Analyzer
 
-Swing Lab: A golf swing analyzer app
+Swing Analyzer: AI-powered golf swing analyzing app
 
-## What I'm thinking
+## What it does
 
-Ask users whose swing they want to imitate
+Receive mp4 files
 
-Ask them to submit their swings
-
-Gemini (for now) compares user's with pro's and gives back feedback on how they can improve their swing
+Gemini (for now) gives back feedback on how they can improve their swing
 
 ### Tech Stack
 
 Frontend - React, Tailwind, Shadcn
-Backend - Bun, Express, MySQL, AWS
+Backend - Bun, Express, MySQL, AWS EC2, S3, nginx
 Video Analysis - GeminiAPI
 
 

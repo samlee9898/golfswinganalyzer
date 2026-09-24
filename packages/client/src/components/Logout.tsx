@@ -1,5 +1,6 @@
 import { Button } from './ui/button';
 
+// consider using context
 type Props = {
    onLogout: () => void;
 };

@@ -1,13 +1,14 @@
-// This file will check env variables
+// This file will check if required env variables are set
 
 import 'dotenv/config';
 
 const REQUIRED_ENV_VARS = [
+   'EXPRESS_SERVER_PORT',
    'JWT_SECRET',
-   'BUCKET_NAME',
-   'BUCKET_REGION',
-   'ACCESS_KEY',
-   'SECRET_ACCESS_KEY',
+   'S3_BUCKET_NAME',
+   'S3_BUCKET_REGION',
+   'S3_ACCESS_KEY',
+   'S3_SECRET_ACCESS_KEY',
    'DB_HOST',
    'DB_USER',
    'DB_PASSWORD',

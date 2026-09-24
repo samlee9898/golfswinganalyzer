@@ -3,11 +3,31 @@ import userRepository from '../repositories/user.repository';
 import { generateToken } from '../utils/jwt';
 import { AppError } from '../errors/AppError';
 
-export async function loginService(
-   userID: string,
+export async function signupService(
+   username: string,
    userPassword: string
 ): Promise<string> {
-   const user = await userRepository.findByUsername(userID);
+   const existingUser = await userRepository.findByUsername(username);
+
+   if (existingUser) {
+      throw new AppError('UserID already exists', 409);
+   }
+
+   const hashedPassword = await bcrypt.hash(userPassword, 4);
+
+   const userIDNumber = await userRepository.createUser(
+      username,
+      hashedPassword
+   );
+
+   return generateToken(userIDNumber, username);
+}
+
+export async function loginService(
+   username: string,
+   userPassword: string
+): Promise<string> {
+   const user = await userRepository.findByUsername(username);
    if (user === null) {
       throw new AppError('Invalid ID or password', 401);
    }
@@ -15,7 +35,7 @@ export async function loginService(
    const userHashedPassword = user.password_hash;
    if (userHashedPassword === null) {
       throw new AppError(
-         'Something went wrong with retrieving hashed password from the database',
+         'Something went wrong with retrieving password from the database',
          500
       );
    }
