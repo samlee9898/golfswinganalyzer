@@ -7,7 +7,7 @@ import {
    deleteVideoController,
 } from '../controllers/video.controller';
 
-// /api/vidoes
+// /api/videos
 const router = Router();
 
 router.use(authMiddleware);

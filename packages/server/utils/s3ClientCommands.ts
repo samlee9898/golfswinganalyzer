@@ -1,4 +1,4 @@
-import S3 from '../config/S3';
+import s3Client from '../config/s3';
 import {
    PutObjectCommand,
    HeadObjectCommand,
@@ -19,7 +19,7 @@ export async function generateUploadURL(
       ContentType: contentType,
    });
 
-   const uploadURL = await getSignedUrl(S3, command, {
+   const uploadURL = await getSignedUrl(s3Client, command, {
       expiresIn: 120,
    });
    return { uploadURL, s3Key };
@@ -33,7 +33,7 @@ export async function generateDownloadURL(
       Key: s3Key,
    });
 
-   const downloadURL = await getSignedUrl(S3, command, {
+   const downloadURL = await getSignedUrl(s3Client, command, {
       expiresIn: 120,
    });
    return { downloadURL };
@@ -46,7 +46,7 @@ export async function confirmVideoExists(s3Key: string): Promise<boolean> {
    });
 
    try {
-      await S3.send(command);
+      await s3Client.send(command);
       return true;
    } catch (error: any) {
       if (

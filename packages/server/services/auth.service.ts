@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
 import userRepository from '../repositories/user.repository';
 import { generateToken } from '../utils/jwt';
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/appError';
 
+// will generate JWT token on success
 export async function signupService(
    username: string,
    userPassword: string
@@ -13,7 +14,7 @@ export async function signupService(
       throw new AppError('UserID already exists', 409);
    }
 
-   const hashedPassword = await bcrypt.hash(userPassword, 4);
+   const hashedPassword = await bcrypt.hash(userPassword, 10);
 
    const userIDNumber = await userRepository.createUser(
       username,
@@ -23,6 +24,7 @@ export async function signupService(
    return generateToken(userIDNumber, username);
 }
 
+// will generate JWT token on success
 export async function loginService(
    username: string,
    userPassword: string

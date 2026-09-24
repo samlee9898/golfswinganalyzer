@@ -1,11 +1,11 @@
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/appError';
 import AnalysisRepository from '../repositories/analysis.repository';
 import videoRepository from '../repositories/video.repository';
 import {
    generateDownloadURL,
    confirmVideoExists,
 } from '../utils/s3ClientCommands';
-import Gemini from '../config/Gemini';
+import geminiClient from '../config/gemini';
 import analysisPrompt from '../utils/analysisPrompt';
 import { analysisJsonSchema, analysisSchema } from '../models/analysis.model';
 
@@ -36,7 +36,7 @@ class AnalysisService {
       try {
          const { downloadURL } = await generateDownloadURL(video.s3_key);
 
-         const geminiResult = await Gemini.interactions.create({
+         const geminiResult = await geminiClient.interactions.create({
             model: 'gemini-3.6-flash',
             input: [
                {
@@ -59,7 +59,7 @@ class AnalysisService {
             },
          });
          if (!geminiResult.output_text) {
-            throw new AppError('Gemini returned an empty analysis', 502);
+            throw new AppError('geminiClient returned an empty analysis', 502);
          }
 
          const analysis = analysisSchema.parse(

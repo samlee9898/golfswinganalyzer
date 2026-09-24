@@ -1,4 +1,4 @@
-import pool from '../config/MySQL.js';
+import pool from '../config/mysql.js';
 import type { ResultSetHeader } from 'mysql2';
 import type { AnalysisResult, AnalysisRow } from '../models/analysis.model.js';
 
@@ -30,10 +30,7 @@ class AnalysisRepository {
       return rows;
    }
 
-   async markAsCompleted(
-      analysisID: number,
-      { analysis }: { analysis: AnalysisResult }
-   ) {
+   async markAsCompleted(analysisID: number, { analysis }: { analysis: AnalysisResult }) {
       await pool.execute(
          `UPDATE video_analyses
          SET status = 'completed',

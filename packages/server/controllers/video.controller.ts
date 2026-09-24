@@ -1,7 +1,7 @@
 import type { Response } from 'express';
 import type { AuthRequest } from '../types/auth.type';
 import videoService from '../services/video.service';
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/appError';
 
 export async function getAllVideosController(req: AuthRequest, res: Response) {
    const { userIDNumber } = req.user!;
@@ -32,11 +32,9 @@ export async function deleteVideoController(req: AuthRequest, res: Response) {
    res.status(200);
 }
 
-export async function createVideoUploadController(
-   req: AuthRequest,
-   res: Response
-) {
+export async function createVideoUploadController(req: AuthRequest, res: Response) {
    const MAX_VIDEO_SIZE = 10 * 1024 * 1024; // 10 MB
+
    const { userIDNumber } = req.user!;
    const { contentType, fileSize } = req.body;
 
@@ -45,18 +43,11 @@ export async function createVideoUploadController(
    }
 
    // size constraint by Gemini API
-   if (
-      typeof fileSize !== 'number' ||
-      fileSize <= 0 ||
-      fileSize > MAX_VIDEO_SIZE
-   ) {
+   if (typeof fileSize !== 'number' || fileSize <= 0 || fileSize > MAX_VIDEO_SIZE) {
       throw new AppError('Video must be 10 MB or smaller', 400);
    }
 
-   const { uploadURL, videoID } = await videoService.prepareVideoUpload(
-      userIDNumber,
-      contentType
-   );
+   const { uploadURL, videoID } = await videoService.prepareVideoUpload(userIDNumber, contentType);
 
    res.status(200).json({ uploadURL, videoID });
 }

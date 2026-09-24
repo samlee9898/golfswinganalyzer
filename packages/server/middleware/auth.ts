@@ -1,13 +1,9 @@
 import type { Response, NextFunction } from 'express';
 import type { AuthRequest, JWTPayload } from '../types/auth.type';
 import jwt from 'jsonwebtoken';
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/appError';
 
-export function authMiddleware(
-   req: AuthRequest,
-   res: Response,
-   next: NextFunction
-) {
+export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
    const token = req.cookies.token;
 
    if (!token) {

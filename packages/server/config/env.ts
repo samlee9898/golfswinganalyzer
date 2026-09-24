@@ -1,5 +1,6 @@
 // This file will check if required env variables are set
 
+// mount env variables
 import 'dotenv/config';
 
 const REQUIRED_ENV_VARS = [

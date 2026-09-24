@@ -1,4 +1,4 @@
-import pool from '../config/MySQL.js';
+import pool from '../config/mysql.js';
 import type { VideoRow } from '../models/video.model';
 import type { ResultSetHeader } from 'mysql2';
 

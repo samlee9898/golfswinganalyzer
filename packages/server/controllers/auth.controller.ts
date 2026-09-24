@@ -21,12 +21,14 @@ export async function loginController(req: Request, res: Response) {
    const { username, userPassword } = req.body;
 
    const token = await loginService(username, userPassword);
+   
    res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 60 * 60 * 1000,
    });
+   
    return res.status(200).json({ message: 'Login successful' });
 }
 

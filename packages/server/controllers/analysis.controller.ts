@@ -3,27 +3,19 @@ import type { AuthRequest } from '../types/auth.type';
 import { AppError } from '../errors/AppError';
 import analysisService from '../services/analysis.service';
 
-export async function getAllAnalysesController(
-   req: AuthRequest,
-   res: Response
-) {
+// TODO
+export async function getAllAnalysesController(req: AuthRequest, res: Response) {
    const { userIDNumber } = req.user!;
    const videoID = Number(req.params.videoID);
 }
 
+// TODO
 export async function getAnalysisController(req: AuthRequest, res: Response) {
    const { userIDNumber } = req.user!;
    const videoID = Number(req.params.videoID);
 }
 
-export async function createAnalysisController(
-   req: AuthRequest,
-   res: Response
-) {
-   // things that needs to be done here
-   // 1. get analysis from gemini
-   // 2. store analysis to the database
-
+export async function createAnalysisController(req: AuthRequest, res: Response) {
    const { userIDNumber } = req.user!;
    const videoID = Number(req.params.videoID);
 

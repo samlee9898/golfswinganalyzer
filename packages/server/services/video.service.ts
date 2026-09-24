@@ -1,4 +1,4 @@
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/appError';
 import type { VideoRow } from '../models/video.model';
 import { generateUploadURL } from '../utils/s3ClientCommands';
 import videoRepository from '../repositories/video.repository';
