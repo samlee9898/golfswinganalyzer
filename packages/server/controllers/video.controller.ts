@@ -26,13 +26,16 @@ export async function deleteVideoController(req: AuthRequest, res: Response) {
    const isVideoDeleted = await videoService.deleteVideo(videoID, userIDNumber);
 
    if (!isVideoDeleted) {
-      res.status(400);
+      throw new AppError('Video Not found', 404);
    }
 
-   res.status(200);
+   res.sendStatus(204);
 }
 
-export async function createVideoUploadController(req: AuthRequest, res: Response) {
+export async function createVideoUploadController(
+   req: AuthRequest,
+   res: Response
+) {
    const MAX_VIDEO_SIZE = 10 * 1024 * 1024; // 10 MB
 
    const { userIDNumber } = req.user!;
@@ -43,11 +46,18 @@ export async function createVideoUploadController(req: AuthRequest, res: Respons
    }
 
    // size constraint by Gemini API
-   if (typeof fileSize !== 'number' || fileSize <= 0 || fileSize > MAX_VIDEO_SIZE) {
+   if (
+      typeof fileSize !== 'number' ||
+      fileSize <= 0 ||
+      fileSize > MAX_VIDEO_SIZE
+   ) {
       throw new AppError('Video must be 10 MB or smaller', 400);
    }
 
-   const { uploadURL, videoID } = await videoService.prepareVideoUpload(userIDNumber, contentType);
+   const { uploadURL, videoID } = await videoService.prepareVideoUpload(
+      userIDNumber,
+      contentType
+   );
 
    res.status(200).json({ uploadURL, videoID });
 }

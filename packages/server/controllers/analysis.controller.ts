@@ -1,21 +1,31 @@
 import type { Response } from 'express';
 import type { AuthRequest } from '../types/auth.type';
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/appError';
 import analysisService from '../services/analysis.service';
 
 // TODO
-export async function getAllAnalysesController(req: AuthRequest, res: Response) {
+export async function getAllAnalysesController(
+   req: AuthRequest,
+   res: Response
+) {
    const { userIDNumber } = req.user!;
    const videoID = Number(req.params.videoID);
+
+   res.sendStatus(502);
 }
 
 // TODO
 export async function getAnalysisController(req: AuthRequest, res: Response) {
    const { userIDNumber } = req.user!;
    const videoID = Number(req.params.videoID);
+
+   res.sendStatus(502);
 }
 
-export async function createAnalysisController(req: AuthRequest, res: Response) {
+export async function createAnalysisController(
+   req: AuthRequest,
+   res: Response
+) {
    const { userIDNumber } = req.user!;
    const videoID = Number(req.params.videoID);
 

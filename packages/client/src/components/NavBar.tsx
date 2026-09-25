@@ -20,7 +20,6 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn, onLogout }: Props) => {
                aria-label="Swing Analyzer home"
             >
                <span className="flex size-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-                  {/*<IoGolf className="size-5" /> */}
                   <img
                      src="/logo.svg"
                      alt="Golf Swing Analyzer"

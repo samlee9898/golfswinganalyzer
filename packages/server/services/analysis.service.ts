@@ -3,7 +3,7 @@ import AnalysisRepository from '../repositories/analysis.repository';
 import videoRepository from '../repositories/video.repository';
 import {
    generateDownloadURL,
-   confirmVideoExists,
+   confirmVideoExistsInS3,
 } from '../utils/s3ClientCommands';
 import geminiClient from '../config/gemini';
 import analysisPrompt from '../utils/analysisPrompt';
@@ -22,7 +22,7 @@ class AnalysisService {
          throw new AppError('Video not found', 404);
       }
 
-      const videoExists = await confirmVideoExists(video.s3_key);
+      const videoExists = await confirmVideoExistsInS3(video.s3_key);
 
       if (!videoExists) {
          throw new AppError(

@@ -1,3 +1,6 @@
+// this file is for local development
+// runs both server and client
+
 import concurrently from 'concurrently';
 
 concurrently([

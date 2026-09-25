@@ -6,12 +6,11 @@ import {
 } from 'react-icons/io5';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
 import NavBar from './components/NavBar';
 import { Field, FieldLabel } from './components/ui/field';
 
 function App() {
-   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null); // consider using context
+   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
    const inputRef = useRef<HTMLInputElement>(null);
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
    const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -26,7 +25,7 @@ function App() {
 
    function selectFile(file: File, input?: HTMLInputElement) {
       if (!isLoggedIn) {
-         alert('You need to be logged in to analyze a video.');
+         alert('You need to be logged in to analyze a video!');
          if (input) input.value = '';
          return;
       }
@@ -88,10 +87,9 @@ function App() {
 
    function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
       const file = event.target.files?.[0];
+      event.target.value = '';
 
-      if (!file) return;
-
-      selectFile(file, event.target);
+      if (file) selectFile(file);
    }
 
    function handleDrop(event: React.DragEvent<HTMLDivElement>) {
@@ -174,6 +172,8 @@ function App() {
          if (!analysisData.analysis.result.analyzable) {
             alert(analysisData.analysis.result.reason);
          } else {
+            // currently displaying just one improvement returned by Gemini API
+            // TODO: design frontend and display as many things as needed
             alert(analysisData.analysis.result.improvements?.[0]);
          }
          setStage('complete');
@@ -187,35 +187,34 @@ function App() {
    }
 
    return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div>
          <NavBar
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             onLogout={handleLogout}
          />
-         <Separator />
 
-         <main className="flex min-h-[calc(100vh-73px)] items-center bg-[url('/swing.jpg')] bg-cover bg-top bg-no-repeat">
-            <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:px-8 lg:py-24">
-               <section className="max-w-xl">
-                  <div className="mb-5 inline-flex items-center rounded-full border bg-muted/50 px-3 py-1 text-s font-extrabold text-black">
+         <main className="flex items-center bg-[url('/swing.jpg')] bg-cover bg-top bg-no-repeat min-h-[calc(100vh-75px)]">
+            <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-2">
+               <section className="max-w-xl rounded-2xl bg-black/55 p-6 text-white backdrop-blur-sm sm:p-8">
+                  <div className="mb-2 inline-flex items-center rounded-full border bg-muted/50 px-3 py-1 text-s font-bold text-black">
                      AI-powered swing analysis
                   </div>
 
-                  <h1 className="text-balance text-4xl font-bold tracking-tight text-sky-300 [-webkit-text-stroke:1px_rgba(15,23,42,0.45)] [text-shadow:0_3px_10px_rgba(0,0,0,0.8)] sm:text-5xl lg:text-6xl">
+                  <h1 className="text-balance text-2xl font-bold tracking-tight text-sky-200 lg:text-6xl">
                      Upload your swing.
-                     <span className="block text-rose-300 [-webkit-text-stroke:1px_rgba(15,23,42,0.45)] [text-shadow:0_3px_10px_rgba(0,0,0,0.8)]">
+                     <span className="block text-rose-200">
                         Find your problem.
                      </span>
                   </h1>
 
-                  <p className="mt-6 max-w-lg text-pretty text-base leading-7 text-white sm:text-lg [text-shadow:0_3px_10px_rgba(0,0,0,0.8)]">
+                  <p className="mt-6 max-w-lg text-pretty font-medium text-base leading-7 text-white sm:text-lg">
                      Upload a video of your golf swing and receive clear,
                      personalized feedback to help you understand your swing and
-                     improve with confidence.
+                     improve with confidence!
                   </p>
 
-                  <div className="mt-8 grid gap-3 text-sm sm:grid-cols-2 [text-shadow:0_3px_10px_rgba(0,0,0,0.8)]">
+                  <div className="mt-8 grid gap-3 text-sm font-medium sm:grid-cols-2">
                      <div className="flex items-center gap-2 text-white">
                         <IoCheckmarkCircleOutline className="size-5" />
                         Personalized feedback
@@ -237,7 +236,7 @@ function App() {
                      </p>
 
                      <div
-                        className="mt-6 flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/40 bg-white/10 px-6 text-center transition-colors hover:border-white/70 hover:bg-white/20"
+                        className="mt-6 flex flex-col items-center justify-center text-center min-h-72 cursor-pointer rounded-xl border border-dashed border-white/40 bg-white/10 px-6 transition-colors hover:border-white/70 hover:bg-white/20"
                         role="button"
                         tabIndex={0}
                         onClick={openFilePicker}

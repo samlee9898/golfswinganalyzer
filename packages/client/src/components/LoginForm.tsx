@@ -14,7 +14,6 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-// consider using context
 type Props = {
    setIsLoggedIn: Dispatch<SetStateAction<boolean | null>>;
 };
@@ -46,7 +45,7 @@ export function LoginForm({ setIsLoggedIn }: Props) {
       };
 
       const endpoint =
-         mode === 'login' ? '/api/auth/login/' : '/api/auth/signup/';
+         mode === 'login' ? '/api/auth/login' : '/api/auth/signup';
       try {
          const response = await fetch(endpoint, {
             method: 'POST',

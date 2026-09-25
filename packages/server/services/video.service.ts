@@ -1,11 +1,14 @@
 import { AppError } from '../errors/appError';
 import type { VideoRow } from '../models/video.model';
-import { generateUploadURL } from '../utils/s3ClientCommands';
+import {
+   generateUploadURL,
+   deleteVideoFromS3,
+} from '../utils/s3ClientCommands';
 import videoRepository from '../repositories/video.repository';
 
 class VideoService {
    async getAllVideos(userIDNumber: number): Promise<VideoRow[]> {
-      return await videoRepository.findAllVideosByUserIDNumber(userIDNumber);
+      return videoRepository.findAllVideosByUserIDNumber(userIDNumber);
    }
 
    async getVideo(videoID: number, userIDNumber: number): Promise<VideoRow> {
@@ -22,9 +25,17 @@ class VideoService {
    }
 
    async deleteVideo(videoID: number, userIDNumber: number): Promise<boolean> {
-      const isVideoDeleted = videoRepository.deleteVideo(videoID, userIDNumber);
+      const video = await videoRepository.findVideoByIDAndUserIDNumber(
+         videoID,
+         userIDNumber
+      );
 
-      return isVideoDeleted;
+      if (!video) {
+         return false;
+      }
+
+      await deleteVideoFromS3(video.s3_key);
+      return await videoRepository.deleteVideo(videoID, userIDNumber);
    }
 
    async prepareVideoUpload(userIDNumber: number, contentType: string) {

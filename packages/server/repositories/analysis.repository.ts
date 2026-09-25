@@ -9,7 +9,7 @@ class AnalysisRepository {
          [videoID]
       );
 
-      return result.insertId ?? null;
+      return result.insertId;
    }
 
    async findByAnalysisID(analysisID: number) {
@@ -30,7 +30,7 @@ class AnalysisRepository {
       return rows;
    }
 
-   async markAsCompleted(analysisID: number, { analysis }: { analysis: AnalysisResult }) {
+   async markAsCompleted(analysisID: number, analysis: AnalysisResult) {
       await pool.execute(
          `UPDATE video_analyses
          SET status = 'completed',

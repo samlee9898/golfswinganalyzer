@@ -3,6 +3,7 @@ import {
    PutObjectCommand,
    HeadObjectCommand,
    GetObjectCommand,
+   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import crypto from 'crypto';
@@ -22,6 +23,7 @@ export async function generateUploadURL(
    const uploadURL = await getSignedUrl(s3Client, command, {
       expiresIn: 120,
    });
+
    return { uploadURL, s3Key };
 }
 
@@ -36,10 +38,11 @@ export async function generateDownloadURL(
    const downloadURL = await getSignedUrl(s3Client, command, {
       expiresIn: 120,
    });
+
    return { downloadURL };
 }
 
-export async function confirmVideoExists(s3Key: string): Promise<boolean> {
+export async function confirmVideoExistsInS3(s3Key: string): Promise<boolean> {
    const command = new HeadObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME!,
       Key: s3Key,
@@ -58,6 +61,16 @@ export async function confirmVideoExists(s3Key: string): Promise<boolean> {
 
       // Permission errors, AWS outages, and other unexpected errors
       // also should not be treated as "file doesn't exist."
+      // finally throw error to my error handler
       throw error;
    }
+}
+
+export async function deleteVideoFromS3(s3Key: string): Promise<void> {
+   await s3Client.send(
+      new DeleteObjectCommand({
+         Bucket: process.env.S3_BUCKET_NAME!,
+         Key: s3Key,
+      })
+   );
 }

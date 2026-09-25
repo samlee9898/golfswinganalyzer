@@ -14,7 +14,6 @@ Frontend - React, Tailwind, Shadcn
 Backend - Bun, Express, MySQL, AWS EC2, S3, nginx
 Video Analysis - GeminiAPI
 
-
 To install dependencies:
 
 ```bash
